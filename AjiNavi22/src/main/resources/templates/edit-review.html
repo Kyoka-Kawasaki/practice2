@@ -2,15 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>レビュー登録</title>
+<title>レビュー編集</title>
 <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-	<h2>レビュー登録</h2>
+	<h2>レビュー編集</h2>
 
-    <form th:action="@{/regist-review}" method="POST" 
-    		th:object="${reviewRegistForm}">
+    <form th:action="@{/edit-review}" method="POST" 
+    		th:object="${reviewEditForm}">
+		【ID】<br>
+		<p th:text="*{reviewId}"></p>
+    	<input type="hidden" th:field="*{reviewId}">
+    	<div th:if="${#fields.hasErrors('reviewId')}" th:errors="*{reviewId}" class="error-msg"></div>
+		<br>
 		【店舗ID】<br>
 		<p th:text="*{restaurantId}
 		               + '　' + *{restaurantName}"></p>
@@ -42,9 +47,15 @@
     	<input type="text" th:field="*{comment}" class="comment" ><br>
     	<div th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}" class="error-msg"></div>
 		<br>
-    	<input type="submit" value="登録" class="btn">
+    	<input type="submit" value="更新" class="btn">
     </form>
 
+    <form th:action="@{/search-review}" method="POST"
+			th:object="${reviewEditForm}">
+    	<input type="hidden" th:field="*{restaurantId}">
+    	<input type="hidden" th:field="*{restaurantName}">
+    	<input type="submit" value="もどる" class="btn">
+   	</form>
 	<br>
 	<a th:href="@{/top}">トップページに戻る</a>
 
